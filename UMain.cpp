@@ -50,6 +50,8 @@ __fastcall TMain::TMain(TComponent* Owner)
     tmrUpdate->Enabled=true;
   else
     ShowMessage(message);
+  //
+  int a=0;
 }
 //---------------------------------------------------------------------------
 __fastcall TMain::~TMain()
