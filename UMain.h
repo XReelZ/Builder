@@ -24,13 +24,14 @@ __published:// IDE-managed Components
   void __fastcall tmrUpdateTimer(TObject *Sender);
   void __fastcall tmrMoveTimer(TObject *Sender);
 private:// User declarations
+  TStringList *keyParams;
   SGame *gm;
-  AnsiString keyParam;
 public:// User declarations
   AnsiString appPath;
   AnsiString dataPath;
   AnsiString resourcePath;
   Graphics::TBitmap *bmp;
+  TCriticalSection *crKeyInput;
   //
   void __fastcall RaiseTickMessage(TMessage aMessage);
   void __fastcall RaiseKeyMessage(TMessage aMessage);

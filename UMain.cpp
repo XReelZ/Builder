@@ -31,6 +31,8 @@ __fastcall TMain::TMain(TComponent* Owner)
   //
   BorderStyle=bsNone;
   //
+  crKeyInput=new TCriticalSection();
+  keyParams=new TStringList();
   gm=new SGame(Handle,Width,Height,32);
   bmp=new Graphics::TBitmap();
   AnsiString bckPath=resourcePath+"\\Background.bmp";
@@ -50,12 +52,12 @@ __fastcall TMain::TMain(TComponent* Owner)
     tmrUpdate->Enabled=true;
   else
     ShowMessage(message);
-  //
-  int a=0;
 }
 //---------------------------------------------------------------------------
 __fastcall TMain::~TMain()
 {
+  delete crKeyInput;
+  delete keyParams;
   delete gm;
   if(bmp)
     delete bmp;
@@ -74,24 +76,33 @@ void __fastcall TMain::tmrUpdateTimer(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMain::RaiseKeyMessage(TMessage aMessage)
 {
-  keyParam=(AnsiString)(char)aMessage.WParamLo;
+  crKeyInput->Enter();
+  //
+  AnsiString key=(AnsiString)(char)aMessage.WParamLo;
+  key=key.UpperCase();
   //
   if(aMessage.Msg==WM_KEYDOWN)
+  {
+    int index=keyParams->IndexOf(key);
+    if(index<0)
+      keyParams->Add(key);
+  }
+  if(aMessage.Msg==WM_KEYUP)
+    keyParams->Delete(keyParams->IndexOf(key));
+  //
+  if(keyParams->Count>0)
   {
     if(!tmrMove->Enabled)
       tmrMove->Enabled=true;
   }
-  if(aMessage.Msg==WM_KEYUP)
-  {
-    if(tmrMove->Enabled)
-      tmrMove->Enabled=false;
-  }
+  else
+    tmrMove->Enabled=false;
+  //
+  crKeyInput->Leave();
 }
 //---------------------------------------------------------------------------
 void __fastcall TMain::tmrMoveTimer(TObject *Sender)
 {
-  if(keyParam.UpperCase()=="W" || keyParam.UpperCase()=="S" ||
-     keyParam.UpperCase()=="A" || keyParam.UpperCase()=="D")
-    gm->RaiseKeyEvent(keyParam);
+  gm->RaiseKeyEvent(keyParams->Text);
 }
 //---------------------------------------------------------------------------

@@ -128,14 +128,14 @@ void __fastcall SGame::RaiseKeyEvent(AnsiString aKey)
   TPoint tp;
   tp.x=0;
   tp.y=0;
-  if(aKey.UpperCase()=="W")
-    tp.y=-1;
-  else if(aKey.UpperCase()=="S")
-    tp.y=1;
-  else if(aKey.UpperCase()=="A")
-    tp.x=-1;
-  else if(aKey.UpperCase()=="D")
-    tp.x=1;
+  if(aKey.UpperCase().Pos("W")>0)
+    tp.y-=1;
+  if(aKey.UpperCase().Pos("S")>0)
+    tp.y+=1;
+  if(aKey.UpperCase().Pos("A")>0)
+    tp.x-=1;
+  if(aKey.UpperCase().Pos("D")>0)
+    tp.x+=1;
   //
   if(eng)
     eng->MovePlayer(tp);
