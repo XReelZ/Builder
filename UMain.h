@@ -24,6 +24,7 @@ __published:// IDE-managed Components
   void __fastcall tmrUpdateTimer(TObject *Sender);
   void __fastcall tmrMoveTimer(TObject *Sender);
 private:// User declarations
+  AnsiString lastPressedKey;
   TStringList *keyParams;
   SGame *gm;
 public:// User declarations
@@ -32,6 +33,7 @@ public:// User declarations
   AnsiString resourcePath;
   Graphics::TBitmap *bmp;
   TCriticalSection *crKeyInput;
+  TPoint mousePos;
   //
   void __fastcall RaiseTickMessage(TMessage aMessage);
   void __fastcall RaiseKeyMessage(TMessage aMessage);

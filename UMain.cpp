@@ -1,8 +1,10 @@
 //---------------------------------------------------------------------------
-#include <vcl.h>
 #pragma hdrstop
 //---------------------------------------------------------------------------
 #include "UMain.h"
+//---------------------------------------------------------------------------
+#include <memory>
+#include <vcl.h>
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -30,6 +32,35 @@ __fastcall TMain::TMain(TComponent* Owner)
   Height=_RESY;
   //
   BorderStyle=bsNone;
+  //
+  //Cursor=crCross;
+  const int crMyCursor=5;
+  Graphics::TBitmap *bmpMask=new Graphics::TBitmap();
+  Graphics::TBitmap *bmpColor=new Graphics::TBitmap();
+  TIconInfo *iconInfo=new TIconInfo();
+  try
+  {
+    bmpMask->LoadFromFile(resourcePath+"\\SquareMask.bmp");
+    bmpColor->LoadFromFile(resourcePath+"\\Square.bmp");
+  }
+  catch(Exception &e)
+  {
+  }
+  //
+  iconInfo->fIcon = false;
+  iconInfo->xHotspot = 20;
+  iconInfo->yHotspot = 20;
+  iconInfo->hbmMask = bmpMask->Handle;
+  iconInfo->hbmColor = bmpColor->Handle;
+  //
+  Screen->Cursors[crMyCursor]=CreateIconIndirect(iconInfo);
+  //
+  Screen->Cursor = crMyCursor;
+  delete iconInfo;
+  delete bmpColor;
+  delete bmpMask;
+  //
+  ::GetCursorPos(&mousePos);
   //
   crKeyInput=new TCriticalSection();
   keyParams=new TStringList();
@@ -65,6 +96,8 @@ __fastcall TMain::~TMain()
 //---------------------------------------------------------------------------
 void __fastcall TMain::RaiseTickMessage(TMessage aMessage)
 {
+  ::GetCursorPos(&mousePos);
+  //
   gm->Draw(bmp,0,0);
   gm->Flip();
 }
@@ -76,19 +109,23 @@ void __fastcall TMain::tmrUpdateTimer(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMain::RaiseKeyMessage(TMessage aMessage)
 {
-  crKeyInput->Enter();
-  //
   AnsiString key=(AnsiString)(char)aMessage.WParamLo;
   key=key.UpperCase();
   //
+  crKeyInput->Enter();
+  //
+  int index=keyParams->IndexOf(key);
+  //
   if(aMessage.Msg==WM_KEYDOWN)
   {
-    int index=keyParams->IndexOf(key);
     if(index<0)
       keyParams->Add(key);
   }
   if(aMessage.Msg==WM_KEYUP)
-    keyParams->Delete(keyParams->IndexOf(key));
+  {
+    if(index>=0)
+      keyParams->Delete(keyParams->IndexOf(key));
+  }
   //
   if(keyParams->Count>0)
   {

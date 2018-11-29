@@ -224,28 +224,27 @@ void __fastcall SEngine::LoadNPCs()
 //---------------------------------------------------------------------------
 void __fastcall SEngine::MovePlayer(TPoint aPoint)
 {
-//  for(int i=0;i<npcList->Count;i++)
-//  {
-//    SNPC *npc=(SNPC *)npcList->Items[i];
-    if(npc)
-    {
-      if(aPoint.x>0)
-        npc->SetOrientation(1);
-      else if(aPoint.x<0)
-        npc->SetOrientation(4);
-      else if(aPoint.y<0)
-        npc->SetOrientation(2);
-      else if(aPoint.y>0)
-        npc->SetOrientation(3);
-      //
-      TPoint tp;
-      int speed=npc->GetSpeed();
-      npc->GetCoords(tp);
-      tp.x=tp.x+(aPoint.x*speed);
-      tp.y=tp.y+(aPoint.y*speed);
-      npc->Move(tp);
-    }
-//  }
+  if(aPoint.x==0 && aPoint.y==0)
+    return;
+  //
+  if(npc)
+  {
+    if(aPoint.x>0)
+      npc->SetOrientation(1);
+    else if(aPoint.x<0)
+      npc->SetOrientation(4);
+    else if(aPoint.y<0)
+      npc->SetOrientation(2);
+    else if(aPoint.y>0)
+      npc->SetOrientation(3);
+    //
+    TPoint tp;
+    int speed=npc->GetSpeed();
+    npc->GetCoords(tp);
+    tp.x=tp.x+(aPoint.x*speed);
+    tp.y=tp.y+(aPoint.y*speed);
+    npc->Move(tp);
+  }
 }
 //---------------------------------------------------------------------------
 bool __fastcall SEngine::DrawNPCs(Graphics::TBitmap *aBackGround)

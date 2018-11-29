@@ -68,6 +68,7 @@ bool __fastcall SGame::Draw(Graphics::TBitmap *aBitmap, int aX, int aY)
   bool res=false;
   if(!aBitmap)
     return res;
+  //
   Graphics::TBitmap *bmp=new Graphics::TBitmap();
   //
   bmp->Width=aBitmap->Width;
@@ -128,6 +129,7 @@ void __fastcall SGame::RaiseKeyEvent(AnsiString aKey)
   TPoint tp;
   tp.x=0;
   tp.y=0;
+  //
   if(aKey.UpperCase().Pos("W")>0)
     tp.y-=1;
   if(aKey.UpperCase().Pos("S")>0)
