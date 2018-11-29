@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+*.tds
+*.map
+Win32/Debug/Builder.pdi
+*.ils
+*.ilf
+*.ild
+*.ilc
+*.#00
