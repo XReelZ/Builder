@@ -191,35 +191,21 @@ void __fastcall SNPC::SetOrientation(int aOrientation)
 //---------------------------------------------------------------------------
 __fastcall SEngine::SEngine()
 {
-  //npcList=new TList();
   npc=new SNPC();
   LoadNPCs();
 }
 //---------------------------------------------------------------------------
 __fastcall SEngine::~SEngine()
 {
-//  for(int i=0;i<npcList->Count;i++)
-//  {
-//    SNPC *npc=(SNPC *)npcList->Items[i];
-//    if(npc)
-//      delete npc;
-//  }
-//  delete npcList;
   delete npc;
 }
 //---------------------------------------------------------------------------
 void __fastcall SEngine::LoadNPCs()
 {
   AnsiString npcPath=Main->resourcePath+"\\Right_Sprite_Move_small.bmp";
-  //SNPC *npc=new SNPC();
   npc->SetSpeed(5);
   //
   bool ok=npc->LoadPicture(npcPath);
-
-//  if(ok)
-//    npcList->Add(npc);
-//  else
-//    delete npc;
 }
 //---------------------------------------------------------------------------
 void __fastcall SEngine::MovePlayer(TPoint aPoint)
@@ -253,20 +239,16 @@ bool __fastcall SEngine::DrawNPCs(Graphics::TBitmap *aBackGround)
   if(!aBackGround)
     return res;
   //
-//  for(int i=0;i<npcList->Count;i++)
-//  {
-//    SNPC *npc=(SNPC *)npcList->Items[i];
-    if(npc)
-    {
-      TPoint tp;
-      Graphics::TBitmap *bmp=npc->GetActiveBitmap(false);
-      Graphics::TBitmap *bmpT=RotateBMP(bmp,45);
-      npc->GetCoords(tp);
-      aBackGround->Canvas->Draw(tp.x,tp.y,bmpT);
-      delete bmpT;
-      delete bmp;
-    }
-//  }
+  if(npc)
+  {
+    TPoint tp;
+    Graphics::TBitmap *bmp=npc->GetActiveBitmap(false);
+    //Graphics::TBitmap *bmpT=RotateBMP(bmp,45);
+    npc->GetCoords(tp);
+    aBackGround->Canvas->Draw(tp.x,tp.y,bmp);
+    //delete bmpT;
+    delete bmp;
+  }
   //
   res=true;
   return res;
