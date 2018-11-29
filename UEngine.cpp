@@ -3,6 +3,9 @@
 //---------------------------------------------------------------------------
 #include "UEngine.h"
 #include "UMain.h"
+#include <Math.hpp>
+#define min(a, b)  (((a) < (b)) ? (a) : (b))
+#define max(a, b)  (((a) > (b)) ? (a) : (b))
 //---------------------------------------------------------------------------
 //class SGameObject
 //---------------------------------------------------------------------------
@@ -258,13 +261,62 @@ bool __fastcall SEngine::DrawNPCs(Graphics::TBitmap *aBackGround)
     {
       TPoint tp;
       Graphics::TBitmap *bmp=npc->GetActiveBitmap(false);
+      Graphics::TBitmap *bmpT=RotateBMP(bmp,45);
       npc->GetCoords(tp);
-      aBackGround->Canvas->Draw(tp.x,tp.y,bmp);
+      aBackGround->Canvas->Draw(tp.x,tp.y,bmpT);
+      delete bmpT;
       delete bmp;
     }
 //  }
   //
   res=true;
+  return res;
+}
+//---------------------------------------------------------------------------
+Graphics::TBitmap *__fastcall SEngine::RotateBMP(Graphics::TBitmap *aBitmap, float aDegree)
+{
+  Graphics::TBitmap *res=new Graphics::TBitmap();
+  res->Width=aBitmap->Width;
+  res->Height=aBitmap->Height;
+  res->Transparent=aBitmap->Transparent;
+  res->Canvas->Brush->Color=(TColor)aBitmap->Canvas->Pixels[0][0];
+  res->Canvas->FillRect(Rect(0,0,res->Width,res->Height));
+  //
+  float radians=(2*3.1416*aDegree)/360;
+  //
+  float cosine=(float)cos(radians);
+  float sine=(float)sin(radians);
+  //
+  float Point1x=(-aBitmap->Height*sine);
+  float Point1y=(aBitmap->Height*cosine);
+  float Point2x=(aBitmap->Width*cosine-aBitmap->Height*sine);
+  float Point2y=(aBitmap->Height*cosine+aBitmap->Width*sine);
+  float Point3x=(aBitmap->Width*cosine);
+  float Point3y=(aBitmap->Width*sine);
+  //
+  float minx=min(0,min(Point1x,min(Point2x,Point3x)));
+  float miny=min(0,min(Point1y,min(Point2y,Point3y)));
+  float maxx=max(Point1x,max(Point2x,Point3x));
+  float maxy=max(Point1y,max(Point2y,Point3y));
+  //
+  int DestBitmapWidth=(int)ceil(fabs(maxx)-minx);
+  int DestBitmapHeight=(int)ceil(fabs(maxy)-miny);
+  //
+  res->Height=DestBitmapHeight;
+  res->Width=DestBitmapWidth;
+  //
+  for(int x=0;x<DestBitmapWidth;x++)
+  {
+    for(int y=0;y<DestBitmapHeight;y++)
+    {
+      int SrcBitmapx=(int)((x+minx)*cosine+(y+miny)*sine);
+      int SrcBitmapy=(int)((y+miny)*cosine-(x+minx)*sine);
+      if(SrcBitmapx>=0 && SrcBitmapx<aBitmap->Width && SrcBitmapy>=0 &&
+         SrcBitmapy<aBitmap->Height)
+        res->Canvas->Pixels[x][y]=aBitmap->Canvas->Pixels[SrcBitmapx][SrcBitmapy];
+    }
+  }
+  //
   return res;
 }
 //---------------------------------------------------------------------------

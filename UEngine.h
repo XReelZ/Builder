@@ -56,6 +56,7 @@ class SEngine
   public:
     void __fastcall MovePlayer(TPoint aPoint);
     bool __fastcall DrawNPCs(Graphics::TBitmap *aBackGround);
+    Graphics::TBitmap * __fastcall RotateBMP(Graphics::TBitmap *aBitmap, float aDegree);
     //
     __fastcall SEngine();
     __fastcall ~SEngine();
