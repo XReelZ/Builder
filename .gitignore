@@ -32,7 +32,7 @@
 *.app
 *.tds
 *.map
-Win32/Debug/Builder.pdi
+*.pdi
 *.ils
 *.ilf
 *.ild
