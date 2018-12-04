@@ -28,6 +28,8 @@ class SNPC : SGameObject
     //
   protected:
   public:
+    TPoint mousePos;
+    //
     void __fastcall SetActiveBitmap();
     void __fastcall SetSpeed(int aSpeed);
     bool __fastcall LoadPicture(AnsiString aFilePath);
@@ -40,6 +42,7 @@ class SNPC : SGameObject
     TRect __fastcall GetCollisionBox();
     //
     Graphics::TBitmap *__fastcall GetActiveBitmap(bool aIncludeHitbox);
+    Graphics::TBitmap * __fastcall RotateBMP(Graphics::TBitmap *aBitmap, float aDegree);
     //
     __fastcall SNPC();
     __fastcall ~SNPC();
@@ -56,7 +59,6 @@ class SEngine
   public:
     void __fastcall MovePlayer(TPoint aPoint);
     bool __fastcall DrawNPCs(Graphics::TBitmap *aBackGround);
-    Graphics::TBitmap * __fastcall RotateBMP(Graphics::TBitmap *aBitmap, float aDegree);
     //
     __fastcall SEngine();
     __fastcall ~SEngine();

@@ -33,7 +33,7 @@ __fastcall TMain::TMain(TComponent* Owner)
   //
   BorderStyle=bsNone;
   //
-  Cursor=crNone;
+  Cursor=crDefault;
   Graphics::TBitmap *cursor=new Graphics::TBitmap();
   try
   {

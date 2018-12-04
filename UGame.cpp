@@ -78,7 +78,7 @@ bool __fastcall SGame::Draw(Graphics::TBitmap *aBitmap, int aX, int aY)
   if(eng)
   {
     eng->DrawNPCs(bmp);
-    // eng->DrawCursor(bmp);
+    //eng->DrawCursor(bmp);
   }
   //
   pDDSBack->Restore();
