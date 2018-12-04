@@ -93,8 +93,6 @@ Graphics::TBitmap *__fastcall SNPC::GetActiveBitmap(bool aIncludeHitbox)
   //
   TPoint activebmp;
   //
-  ::GetCursorPos(&mousePos);
-  //
   activebmp.x=activeBitmap.x-1;
   if(activebmp.x<0)
     activebmp.x=0;
@@ -102,10 +100,6 @@ Graphics::TBitmap *__fastcall SNPC::GetActiveBitmap(bool aIncludeHitbox)
   activebmp.y=activeBitmap.y-1;
   if(activebmp.y<0)
     activebmp.y=0;
-  //
-  float radian=atan2f(activebmp.y-mousePos.y,activebmp.x-mousePos.x);
-  float angle=180*radian/M_PI;
-  res=RotateBMP(res,angle);
   //
   res->Width=width;
   res->Height=height;
@@ -247,12 +241,21 @@ bool __fastcall SEngine::DrawNPCs(Graphics::TBitmap *aBackGround)
   //
   if(npc)
   {
-    TPoint tp;
-    Graphics::TBitmap *bmp=npc->GetActiveBitmap(false);
-    //Graphics::TBitmap *bmpT=RotateBMP(bmp,45);
+    TPoint mousePos=TPoint(0,0);
+    ::GetCursorPos(&mousePos);
+    //
+    TPoint tp=TPoint(0,0);
     npc->GetCoords(tp);
-    aBackGround->Canvas->Draw(tp.x,tp.y,bmp);
-    //delete bmpT;
+    //
+    Graphics::TBitmap *bmp=npc->GetActiveBitmap(false);
+    //
+    float radian=atan2f(tp.y-mousePos.y,tp.x-mousePos.x);
+    float angle=180*radian/M_PI;
+    //
+    Graphics::TBitmap *bmpT=RotateBMP(bmp,angle);
+    aBackGround->Canvas->Draw(tp.x,tp.y,bmpT);
+    //
+    delete bmpT;
     delete bmp;
   }
   //
@@ -260,7 +263,7 @@ bool __fastcall SEngine::DrawNPCs(Graphics::TBitmap *aBackGround)
   return res;
 }
 //---------------------------------------------------------------------------
-Graphics::TBitmap *__fastcall SNPC::RotateBMP(Graphics::TBitmap *aBitmap, float aDegree)
+Graphics::TBitmap *__fastcall SEngine::RotateBMP(Graphics::TBitmap *aBitmap, float aDegree)
 {
   Graphics::TBitmap *res=new Graphics::TBitmap();
   res->Width=aBitmap->Width;
