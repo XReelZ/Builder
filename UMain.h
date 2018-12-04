@@ -23,6 +23,8 @@ __published:// IDE-managed Components
   TTimer *tmrMove;
   void __fastcall tmrUpdateTimer(TObject *Sender);
   void __fastcall tmrMoveTimer(TObject *Sender);
+  void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
+  void __fastcall FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift);
 private:// User declarations
   AnsiString lastPressedKey;
   TStringList *keyParams;
@@ -43,8 +45,8 @@ public:// User declarations
   //
   BEGIN_MESSAGE_MAP
     MESSAGE_HANDLER(TICK_MSG, TMessage, RaiseTickMessage)
-    MESSAGE_HANDLER(WM_KEYDOWN, TMessage, RaiseKeyMessage)
-    MESSAGE_HANDLER(WM_KEYUP, TMessage, RaiseKeyMessage)
+    //MESSAGE_HANDLER(WM_KEYDOWN, TMessage, RaiseKeyMessage)
+    //MESSAGE_HANDLER(WM_KEYUP, TMessage, RaiseKeyMessage)
   END_MESSAGE_MAP(TForm)
 };
 //---------------------------------------------------------------------------

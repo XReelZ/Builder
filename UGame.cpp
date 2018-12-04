@@ -76,7 +76,10 @@ bool __fastcall SGame::Draw(Graphics::TBitmap *aBitmap, int aX, int aY)
   bmp->Canvas->Draw(0,0,aBitmap);
   //
   if(eng)
+  {
     eng->DrawNPCs(bmp);
+    // eng->DrawCursor(bmp);
+  }
   //
   pDDSBack->Restore();
   //
@@ -115,8 +118,17 @@ bool __fastcall SGame::Draw(Graphics::TBitmap *aBitmap, int aX, int aY)
 //---------------------------------------------------------------------------
 bool __fastcall SGame::Flip()
 {
-  HRESULT ddrval=pDDSFront->Flip(NULL,DDFLIP_WAIT);
-  return(ddrval==DD_OK);
+  while(1)
+  {
+    HRESULT ddrval = pDDSFront->Flip(NULL, DDFLIP_WAIT);
+    //
+    if(ddrval==DD_OK)
+      return true;
+    if(ddrval==DDERR_SURFACELOST)
+      pDDSFront->Restore();
+    if(ddrval!=DDERR_WASSTILLDRAWING)
+     return true;
+  }
 }
 //---------------------------------------------------------------------------
 AnsiString __fastcall SGame::GetErrorMessage()
@@ -126,9 +138,7 @@ AnsiString __fastcall SGame::GetErrorMessage()
 //---------------------------------------------------------------------------
 void __fastcall SGame::RaiseKeyEvent(AnsiString aKey)
 {
-  TPoint tp;
-  tp.x=0;
-  tp.y=0;
+  TPoint tp=TPoint(0,0);
   //
   if(aKey.UpperCase().Pos("W")>0)
     tp.y-=1;

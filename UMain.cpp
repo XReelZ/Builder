@@ -33,32 +33,42 @@ __fastcall TMain::TMain(TComponent* Owner)
   //
   BorderStyle=bsNone;
   //
-  //Cursor=crCross;
-  const int crMyCursor=5;
-  Graphics::TBitmap *bmpMask=new Graphics::TBitmap();
-  Graphics::TBitmap *bmpColor=new Graphics::TBitmap();
-  TIconInfo *iconInfo=new TIconInfo();
+  Cursor=crNone;
+  Graphics::TBitmap *cursor=new Graphics::TBitmap();
   try
   {
-    bmpMask->LoadFromFile(resourcePath+"\\SquareMask.bmp");
-    bmpColor->LoadFromFile(resourcePath+"\\Square.bmp");
+    cursor->LoadFromFile(resourcePath+"\\Cross.bmp");
   }
   catch(Exception &e)
   {
   }
-  //
-  iconInfo->fIcon = false;
-  iconInfo->xHotspot = 20;
-  iconInfo->yHotspot = 20;
-  iconInfo->hbmMask = bmpMask->Handle;
-  iconInfo->hbmColor = bmpColor->Handle;
-  //
-  Screen->Cursors[crMyCursor]=CreateIconIndirect(iconInfo);
-  //
-  Screen->Cursor = crMyCursor;
-  delete iconInfo;
-  delete bmpColor;
-  delete bmpMask;
+//  const int crMyCursor=5;
+//  Graphics::TBitmap *bmpMask=new Graphics::TBitmap();
+//  Graphics::TBitmap *bmpColor=new Graphics::TBitmap();
+//  TIconInfo *iconInfo=new TIconInfo();
+//  try
+//  {
+//    bmpMask->LoadFromFile(resourcePath+"\\SquareMask.bmp");
+//    bmpColor->LoadFromFile(resourcePath+"\\Square.bmp");
+//  }
+//  catch(Exception &e)
+//  {
+//  }
+//  bmpMask->Transparent=true;
+//  bmpColor->Transparent=true;
+//  //
+//  iconInfo->fIcon = false;
+//  iconInfo->xHotspot = 20;
+//  iconInfo->yHotspot = 20;
+//  iconInfo->hbmMask = bmpMask->Handle;
+//  iconInfo->hbmColor = bmpColor->Handle;
+//  //
+//  Screen->Cursors[crMyCursor]=CreateIconIndirect(iconInfo);
+//  //
+//  Screen->Cursor = crMyCursor;
+//  delete iconInfo;
+//  delete bmpColor;
+  delete cursor;
   //
   ::GetCursorPos(&mousePos);
   //
@@ -109,6 +119,8 @@ void __fastcall TMain::tmrUpdateTimer(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMain::RaiseKeyMessage(TMessage aMessage)
 {
+  return;
+  //
   AnsiString key=(AnsiString)(char)aMessage.WParamLo;
   key=key.UpperCase();
   //
@@ -141,5 +153,52 @@ void __fastcall TMain::RaiseKeyMessage(TMessage aMessage)
 void __fastcall TMain::tmrMoveTimer(TObject *Sender)
 {
   gm->RaiseKeyEvent(keyParams->Text);
+}
+//---------------------------------------------------------------------------
+void __fastcall TMain::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
+{
+  AnsiString key=(AnsiString)(char)Key;
+  key=key.UpperCase();
+  //
+  if(key=="S")
+    int a=0;
+  crKeyInput->Enter();
+  //
+  int index=keyParams->IndexOf(key);
+  //
+  if(index<0)
+    keyParams->Add(key);
+  if(keyParams->Count>0)
+  {
+    if(!tmrMove->Enabled)
+      tmrMove->Enabled=true;
+  }
+  else
+    tmrMove->Enabled=false;
+  //
+  crKeyInput->Leave();
+}
+//---------------------------------------------------------------------------
+void __fastcall TMain::FormKeyUp(TObject *Sender, WORD &Key, TShiftState Shift)
+{
+  AnsiString key=(AnsiString)(char)Key;
+  key=key.UpperCase();
+  //
+  crKeyInput->Enter();
+  //
+  int index=keyParams->IndexOf(key);
+  //
+  if(index>=0)
+    keyParams->Delete(keyParams->IndexOf(key));
+  //
+  if(keyParams->Count>0)
+  {
+    if(!tmrMove->Enabled)
+      tmrMove->Enabled=true;
+  }
+  else
+    tmrMove->Enabled=false;
+  //
+  crKeyInput->Leave();
 }
 //---------------------------------------------------------------------------
