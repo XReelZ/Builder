@@ -22,7 +22,6 @@ class SNPC : SGameObject
 {
   private:
     int speed;
-    int orientation;
     TPoint activeBitmap;
     TRect collisionBox;
     //
@@ -34,8 +33,7 @@ class SNPC : SGameObject
     void __fastcall Move(TPoint tp);
     int __fastcall GetSpeed();
     void __fastcall GetCoords(TPoint &tp);
-    int __fastcall GetOrientation();
-    void __fastcall SetOrientation(int aOrientation);
+    void __fastcall GetDimensions(TPoint &tp);
     //
     TRect __fastcall GetCollisionBox();
     //

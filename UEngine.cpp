@@ -78,10 +78,14 @@ void __fastcall SNPC::GetCoords(TPoint &tp)
   tp.y=y;
 }
 //---------------------------------------------------------------------------
+void __fastcall SNPC::GetDimensions(TPoint &tp)
+{
+  tp.x=width;
+  tp.y=height;
+}
+//---------------------------------------------------------------------------
 void __fastcall SNPC::SetActiveBitmap()
 {
-  activeBitmap.y=orientation;
-  //
   activeBitmap.x++;
   if(activeBitmap.x>20)
     activeBitmap.x=0;
@@ -96,10 +100,6 @@ Graphics::TBitmap *__fastcall SNPC::GetActiveBitmap(bool aIncludeHitbox)
   activebmp.x=activeBitmap.x-1;
   if(activebmp.x<0)
     activebmp.x=0;
-  //
-  activebmp.y=activeBitmap.y-1;
-  if(activebmp.y<0)
-    activebmp.y=0;
   //
   res->Width=width;
   res->Height=height;
@@ -174,19 +174,6 @@ TRect __fastcall SNPC::GetCollisionBox()
   return res;
 }
 //---------------------------------------------------------------------------
-int __fastcall SNPC::GetOrientation()
-{
-  return orientation;
-}
-//---------------------------------------------------------------------------
-void __fastcall SNPC::SetOrientation(int aOrientation)
-{
-  if(aOrientation<0 || aOrientation>4)
-    aOrientation=0;
-  //
-  orientation=aOrientation;
-}
-//---------------------------------------------------------------------------
 //class SEngine
 //---------------------------------------------------------------------------
 __fastcall SEngine::SEngine()
@@ -215,15 +202,6 @@ void __fastcall SEngine::MovePlayer(TPoint aPoint)
   //
   if(npc)
   {
-    if(aPoint.x>0)
-      npc->SetOrientation(1);
-    else if(aPoint.x<0)
-      npc->SetOrientation(4);
-    else if(aPoint.y<0)
-      npc->SetOrientation(2);
-    else if(aPoint.y>0)
-      npc->SetOrientation(3);
-    //
     TPoint tp;
     int speed=npc->GetSpeed();
     npc->GetCoords(tp);
@@ -245,11 +223,13 @@ bool __fastcall SEngine::DrawNPCs(Graphics::TBitmap *aBackGround)
     ::GetCursorPos(&mousePos);
     //
     TPoint tp=TPoint(0,0);
+    TPoint tpDimensions=TPoint(0,0);
     npc->GetCoords(tp);
+    npc->GetDimensions(tpDimensions);
     //
     Graphics::TBitmap *bmp=npc->GetActiveBitmap(false);
     //
-    float radian=atan2f(tp.y-mousePos.y,tp.x-mousePos.x);
+    float radian=atan2f(mousePos.y-(tp.y+(tpDimensions.y/2)),mousePos.x-(tp.x+(tpDimensions.x/2)));
     float angle=180*radian/M_PI;
     //
     Graphics::TBitmap *bmpT=RotateBMP(bmp,angle);
