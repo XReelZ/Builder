@@ -174,6 +174,23 @@ TRect __fastcall SPlayer::GetCollisionBox()
   return res;
 }
 //---------------------------------------------------------------------------
+//class SNPC
+//---------------------------------------------------------------------------
+__fastcall SNPC::SNPC()
+{
+  speed=1;
+  x=150;
+  y=150;
+  width=100;
+  height=100;
+  activeBitmap.x=1;
+  activeBitmap.y=1;
+}
+//---------------------------------------------------------------------------
+__fastcall SNPC::~SNPC()
+{
+}
+//---------------------------------------------------------------------------
 //class SEngine
 //---------------------------------------------------------------------------
 __fastcall SEngine::SEngine()
@@ -189,10 +206,11 @@ __fastcall SEngine::~SEngine()
 //---------------------------------------------------------------------------
 void __fastcall SEngine::LoadNPCs()
 {
-  AnsiString npcPath=Main->resourcePath+"\\Right_Sprite_Move_small.bmp";
+  AnsiString playerImgPath=Main->resourcePath+"\\Right_Sprite_Move_small.bmp";
+  AnsiString npcImgPath=Main->resourcePath+"\\NPC_Sprite.bmp";
   player->SetSpeed(2);
   //
-  bool ok=player->LoadPicture(npcPath);
+  bool ok=player->LoadPicture(playerImgPath);
 }
 //---------------------------------------------------------------------------
 void __fastcall SEngine::MovePlayer(TPoint aPoint)
@@ -229,7 +247,7 @@ bool __fastcall SEngine::DrawNPCs(Graphics::TBitmap *aBackGround)
     //
     Graphics::TBitmap *bmp=player->GetActiveBitmap(false);
     //
-    float radian=atan2f(mousePos.y-(tp.y+(tpDimensions.y/2)),mousePos.x-(tp.x+(tpDimensions.x/2)));
+    float radian=atan2f(((mousePos.y)-(tp.y+(tpDimensions.y/2))),((mousePos.x)-(tp.x+(tpDimensions.x/2))));
     float angle=180*radian/M_PI;
     //
     Graphics::TBitmap *bmpT=RotateBMP(bmp,angle);

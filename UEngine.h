@@ -43,6 +43,27 @@ class SPlayer : SGameObject
     __fastcall ~SPlayer();
 };
 //---------------------------------------------------------------------------
+class SNPC : SGameObject
+{
+  private:
+    int speed;
+    TPoint activeBitmap;
+    TRect collisionBox;
+    //
+  protected:
+  public:
+    bool __fastcall LoadPicture(AnsiString aFilePath);
+    void __fastcall GetCoords(TPoint &tp);
+    void __fastcall GetDimensions(TPoint &tp);
+    //
+    TRect __fastcall GetCollisionBox();
+    //
+    Graphics::TBitmap *__fastcall GetActiveBitmap(bool aIncludeHitbox);
+    //
+    __fastcall SNPC();
+    __fastcall ~SNPC();
+};
+//---------------------------------------------------------------------------
 class SEngine
 {
   private:
