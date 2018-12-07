@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+*.ilf
+*.ild
+*.ilc
+*.tds
