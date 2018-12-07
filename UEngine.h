@@ -18,7 +18,7 @@ class SGameObject
     __fastcall ~SGameObject();
 };
 //---------------------------------------------------------------------------
-class SNPC : SGameObject
+class SPlayer : SGameObject
 {
   private:
     int speed;
@@ -39,15 +39,15 @@ class SNPC : SGameObject
     //
     Graphics::TBitmap *__fastcall GetActiveBitmap(bool aIncludeHitbox);
     //
-    __fastcall SNPC();
-    __fastcall ~SNPC();
+    __fastcall SPlayer();
+    __fastcall ~SPlayer();
 };
 //---------------------------------------------------------------------------
 class SEngine
 {
   private:
     //TList *npcList;
-    SNPC *npc;
+    SPlayer *player;
     //
     void __fastcall LoadNPCs();
   protected:
