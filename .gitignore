@@ -40,3 +40,12 @@ __history/
 *.ilf
 *.ils
 *.ilf
+*.res
+*.#00
+*.ilc
+*.ild
+*.ilf
+*.ils
+*.map
+*.pdi
+*.tds
