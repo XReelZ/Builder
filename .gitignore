@@ -1,5 +1,7 @@
 # Folders
 __history/
+Win32/
+Resources/
 
 # Prerequisites
 *.d
