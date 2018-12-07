@@ -1,3 +1,8 @@
+# Folders
+__history/
+Win32/
+Resources/
+
 # Prerequisites
 *.d
 
@@ -30,3 +35,12 @@
 *.exe
 *.out
 *.app
+*.ild
+*.ilc
+*.tds
+*.ilf
+*.ils
+*.res
+*.#00
+*.map
+*.pdi
