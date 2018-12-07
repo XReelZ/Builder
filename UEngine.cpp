@@ -23,9 +23,9 @@ __fastcall SGameObject::~SGameObject()
   delete sprite;
 }
 //---------------------------------------------------------------------------
-//class SNPC
+//class SPlayer
 //---------------------------------------------------------------------------
-__fastcall SNPC::SNPC()
+__fastcall SPlayer::SPlayer()
 {
   speed=1;
   x=20;
@@ -36,11 +36,11 @@ __fastcall SNPC::SNPC()
   activeBitmap.y=1;
 }
 //---------------------------------------------------------------------------
-__fastcall SNPC::~SNPC()
+__fastcall SPlayer::~SPlayer()
 {
 }
 //---------------------------------------------------------------------------
-bool __fastcall SNPC::LoadPicture(AnsiString aFilePath)
+bool __fastcall SPlayer::LoadPicture(AnsiString aFilePath)
 {
   bool res=false;
   try
@@ -55,43 +55,43 @@ bool __fastcall SNPC::LoadPicture(AnsiString aFilePath)
   return res;
 }
 //---------------------------------------------------------------------------
-void __fastcall SNPC::SetSpeed(int aSpeed)
+void __fastcall SPlayer::SetSpeed(int aSpeed)
 {
   speed=aSpeed;
 }
 //---------------------------------------------------------------------------
-int __fastcall SNPC::GetSpeed()
+int __fastcall SPlayer::GetSpeed()
 {
   return speed;
 }
 //---------------------------------------------------------------------------
-void __fastcall SNPC::Move(TPoint tp)
+void __fastcall SPlayer::Move(TPoint tp)
 {
   x=tp.x;
   y=tp.y;
   SetActiveBitmap();
 }
 //---------------------------------------------------------------------------
-void __fastcall SNPC::GetCoords(TPoint &tp)
+void __fastcall SPlayer::GetCoords(TPoint &tp)
 {
   tp.x=x;
   tp.y=y;
 }
 //---------------------------------------------------------------------------
-void __fastcall SNPC::GetDimensions(TPoint &tp)
+void __fastcall SPlayer::GetDimensions(TPoint &tp)
 {
   tp.x=width;
   tp.y=height;
 }
 //---------------------------------------------------------------------------
-void __fastcall SNPC::SetActiveBitmap()
+void __fastcall SPlayer::SetActiveBitmap()
 {
   activeBitmap.x++;
   if(activeBitmap.x>20)
     activeBitmap.x=0;
 }
 //---------------------------------------------------------------------------
-Graphics::TBitmap *__fastcall SNPC::GetActiveBitmap(bool aIncludeHitbox)
+Graphics::TBitmap *__fastcall SPlayer::GetActiveBitmap(bool aIncludeHitbox)
 {
   Graphics::TBitmap *res=new Graphics::TBitmap();
   //
@@ -120,7 +120,7 @@ Graphics::TBitmap *__fastcall SNPC::GetActiveBitmap(bool aIncludeHitbox)
   return res;
 }
 //---------------------------------------------------------------------------
-TRect __fastcall SNPC::GetCollisionBox()
+TRect __fastcall SPlayer::GetCollisionBox()
 {
   TRect res=Rect(0,0,0,0);
   //
@@ -178,21 +178,21 @@ TRect __fastcall SNPC::GetCollisionBox()
 //---------------------------------------------------------------------------
 __fastcall SEngine::SEngine()
 {
-  npc=new SNPC();
+  player=new SPlayer();
   LoadNPCs();
 }
 //---------------------------------------------------------------------------
 __fastcall SEngine::~SEngine()
 {
-  delete npc;
+  delete player;
 }
 //---------------------------------------------------------------------------
 void __fastcall SEngine::LoadNPCs()
 {
   AnsiString npcPath=Main->resourcePath+"\\Right_Sprite_Move_small.bmp";
-  npc->SetSpeed(5);
+  player->SetSpeed(2);
   //
-  bool ok=npc->LoadPicture(npcPath);
+  bool ok=player->LoadPicture(npcPath);
 }
 //---------------------------------------------------------------------------
 void __fastcall SEngine::MovePlayer(TPoint aPoint)
@@ -200,14 +200,14 @@ void __fastcall SEngine::MovePlayer(TPoint aPoint)
   if(aPoint.x==0 && aPoint.y==0)
     return;
   //
-  if(npc)
+  if(player)
   {
     TPoint tp;
-    int speed=npc->GetSpeed();
-    npc->GetCoords(tp);
+    int speed=player->GetSpeed();
+    player->GetCoords(tp);
     tp.x=tp.x+(aPoint.x*speed);
     tp.y=tp.y+(aPoint.y*speed);
-    npc->Move(tp);
+    player->Move(tp);
   }
 }
 //---------------------------------------------------------------------------
@@ -217,17 +217,17 @@ bool __fastcall SEngine::DrawNPCs(Graphics::TBitmap *aBackGround)
   if(!aBackGround)
     return res;
   //
-  if(npc)
+  if(player)
   {
     TPoint mousePos=TPoint(0,0);
     ::GetCursorPos(&mousePos);
     //
     TPoint tp=TPoint(0,0);
     TPoint tpDimensions=TPoint(0,0);
-    npc->GetCoords(tp);
-    npc->GetDimensions(tpDimensions);
+    player->GetCoords(tp);
+    player->GetDimensions(tpDimensions);
     //
-    Graphics::TBitmap *bmp=npc->GetActiveBitmap(false);
+    Graphics::TBitmap *bmp=player->GetActiveBitmap(false);
     //
     float radian=atan2f(mousePos.y-(tp.y+(tpDimensions.y/2)),mousePos.x-(tp.x+(tpDimensions.x/2)));
     float angle=180*radian/M_PI;
