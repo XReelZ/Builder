@@ -19,7 +19,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
       Application->Initialize();
       Application->MainFormOnTaskBar = true;
       Application->CreateForm(__classid(TMain), &Main);
-      Application->Run();
+     Application->Run();
     }
     catch (Exception &exception)
     {

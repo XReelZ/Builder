@@ -206,8 +206,8 @@ __fastcall SEngine::~SEngine()
 //---------------------------------------------------------------------------
 void __fastcall SEngine::LoadNPCs()
 {
-  AnsiString playerImgPath=Main->resourcePath+"\\Right_Sprite_Move_small.bmp";
-  AnsiString npcImgPath=Main->resourcePath+"\\NPC_Sprite.bmp";
+  AnsiString playerImgPath=Main->resourcePath+"Player.bmp";
+  AnsiString npcImgPath=Main->resourcePath+"NPC_Sprite.bmp";
   player->SetSpeed(2);
   //
   bool ok=player->LoadPicture(playerImgPath);

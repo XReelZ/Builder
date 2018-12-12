@@ -77,7 +77,7 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <ILINK_LibraryPath>C:\Program Files (x86)\Embarcadero\Studio\19.0\lib\win32\release\;C:\Program Files (x86)\Embarcadero\Studio\19.0\lib\win32c\release\psdk\;C:\Program Files (x86)\Embarcadero\Studio\19.0\lib\win32c\release\;C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\um\x86\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <ILINK_LibraryPath>C:\Program Files (x86)\Embarcadero\Studio\19.0\lib\win32\release\psdk\;C:\Program Files (x86)\Embarcadero\Studio\19.0\lib\win32\release\;C:\Program Files (x86)\Embarcadero\Studio\19.0\lib\win32c\release\psdk\;C:\Program Files (x86)\Embarcadero\Studio\19.0\lib\win32c\release\;C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\um\x86\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <PackageImports>adortl;appanalytics;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindengine;CustomIPTransport;DataSnapClient;DataSnapCommon;DataSnapConnectors;DatasnapConnectorsFreePascal;DataSnapIndy10ServerTransport;DataSnapNativeClient;DataSnapProviderClient;DataSnapServer;DataSnapServerMidas;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXDb2Driver;DBXFirebirdDriver;DBXInformixDriver;DBXInterBaseDriver;DBXMSSQLDriver;DBXMySQLDriver;DBXOdbcDriver;DBXOracleDriver;DBXSqliteDriver;DBXSybaseASADriver;DBXSybaseASEDriver;dsnap;dsnapcon;dsnapxml;emsedge;emshosting;FireDACADSDriver;FireDACASADriver;FireDACCommonODBC;FireDACDb2Driver;FireDACDBXDriver;FireDACDSDriver;FireDACInfxDriver;FireDACMongoDBDriver;FireDACMSAccDriver;FireDACMSSQLDriver;FireDACMySQLDriver;FireDACODBCDriver;FireDACOracleDriver;FireDACPgDriver;FireDACTDataDriver;fmx;fmxase;fmxdae;fmxFireDAC;fmxobj;FMXTee;FmxTeeUI;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inetdb;inetdbxpress;Intraweb;rtl;Tee;TeeDB;TeeUI;tethering;vcl;vclactnband;vcldb;vcldsnap;vclFireDAC;vclie;vclimg;VCLRESTComponents;VclSmp;vcltouch;vclwinx;vclx;xmlrtl;$(PackageImports)</PackageImports>
@@ -128,11 +128,11 @@
     </PropertyGroup>
     <ItemGroup>
         <LibFiles Include="C:\Program Files (x86)\Embarcadero\Studio\19.0\lib\win32c\release\psdk\ddraw.lib" Condition="'$(Platform)'=='Win32'">
-            <BuildOrder>10</BuildOrder>
+            <BuildOrder>5</BuildOrder>
             <IgnorePath>true</IgnorePath>
         </LibFiles>
         <LibFiles Include="C:\Program Files (x86)\Embarcadero\Studio\19.0\lib\win32c\release\psdk\dsound.lib" Condition="'$(Platform)'=='Win32'">
-            <BuildOrder>11</BuildOrder>
+            <BuildOrder>6</BuildOrder>
             <IgnorePath>true</IgnorePath>
         </LibFiles>
         <CppCompile Include="Builder.cpp">

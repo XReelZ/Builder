@@ -23,8 +23,8 @@ __fastcall TMain::TMain(TComponent* Owner)
   FormatSettings.DateSeparator='.';
   //
   appPath=ExtractFilePath(ExpandFileName(ParamStr(0)));
-  dataPath=appPath+"\Data";
-  resourcePath=appPath+"\Resources";
+  dataPath=appPath+"\Data\\";
+  resourcePath=appPath+"\Resources\\";
   //
   Color=clBlack;
   //
@@ -37,11 +37,12 @@ __fastcall TMain::TMain(TComponent* Owner)
   Graphics::TBitmap *cursor=new Graphics::TBitmap();
   try
   {
-    cursor->LoadFromFile(resourcePath+"\\Cross.bmp");
+    cursor->LoadFromFile(resourcePath+"Cross.bmp");
   }
   catch(Exception &e)
   {
   }
+  //
 //  const int crMyCursor=5;
 //  Graphics::TBitmap *bmpMask=new Graphics::TBitmap();
 //  Graphics::TBitmap *bmpColor=new Graphics::TBitmap();
@@ -76,7 +77,7 @@ __fastcall TMain::TMain(TComponent* Owner)
   keyParams=new TStringList();
   gm=new SGame(Handle,Width,Height,32);
   bmp=new Graphics::TBitmap();
-  AnsiString bckPath=resourcePath+"\\Background.bmp";
+  AnsiString bckPath=resourcePath+"Background.bmp";
   //
   bmp->Width=Width;
   bmp->Height=Height;
